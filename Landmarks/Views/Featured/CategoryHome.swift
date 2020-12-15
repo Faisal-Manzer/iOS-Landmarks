@@ -14,18 +14,9 @@ struct CategoryHome: View {
     var body: some View {
         NavigationView {
             List {
-                ZStack {
-                    modelData.features[0].image
-                        .resizable()
-                        .scaledToFill()
-                        .frame(height: 200)
-                        .clipped()
-                    
-                    NavigationLink(destination: LandmarkDetail(landmark: modelData.features[0])) {
-                        EmptyView()
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                }
+                PageView(pages: modelData.features.map { FeatureCard(landmark: $0) })
+                    .aspectRatio(3 / 2, contentMode: .fit)
+                    .listRowInsets(EdgeInsets())
                 .listRowInsets(EdgeInsets())
 
                 ForEach(modelData.categories.keys.sorted(), id: \.self) { key in
